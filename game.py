@@ -84,8 +84,51 @@ def getRoundState():
         topDiscard = discardedCards[0]
     playerOneScore = getPlayerScore(1)
     playerTwoScore = getPlayerScore(2)
-    roundState = (playerOneVisible, playerOneScore, playerTwoVisible, playerTwoScore, topDiscard, currentPlayer)
+    roundState = (playerOneVisible, playerOneScore, playerOne, playerTwoVisible, playerTwoScore, playerTwo, topDiscard, currentPlayer, isRoundOver(), isGameOver())
     return roundState
+
+def isRoundOver():
+    roundOver = 0
+    if playerOneTotal == playerOneVisible:
+        roundOver = 1
+    if playerTwoTotal == playerTwoVisible:
+        roundOver = 2
+
+    return roundOver
+
+def isGameOver():
+    gameOver = False
+    if (playerOne >= 100) or (playerTwo >= 100):
+        gameOver = True
+
+    return gameOver
+
+def tallyRoundScore():
+    if isRoundOver() is not 0:
+        global playerOne
+        global playerTwo
+        global playerOneVisible
+        global playerTwoVisible
+        
+        lastWinner = isRoundOver()
+        playerOneScore = getPlayerScore(1)
+        playerTwoScore = getPlayerScore(2)
+
+        if lastWinner == 1 and playerOneScore <= playerTwoScore:
+            playerOneScore *= 2
+        if lastWinner == 2 and playerTwoScore <= playerOneScore:
+            playerTwoScore *= 2
+
+        playerOne += playerOneScore
+        playerTwo += playerTwoScore
+        cards.clear()
+        discardedCards.clear()
+        playerOneTotal.clear()
+        playerOneVisible.clear()
+        playerOneVisible = [None] * 12
+        playerTwoTotal.clear()
+        playerTwoVisible.clear()
+        playerTwoVisible = [None] * 12
 
 
 running = True
