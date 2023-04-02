@@ -1,6 +1,5 @@
 import pygame
 import numpy as np
-import math
 import random
 
 cards = []
@@ -140,31 +139,106 @@ if running:
     window = pygame.display.set_mode([boundsX, boundsY])
     pygame.display.set_caption("Skyjo")
 
+card_width = 100
+card_height = 150
+
+DEFAULT = (150, 100, 200)
+DEEP_BLUE = (100, 50, 255)
+LIGHT_BLUE = (150, 150, 255)
+GREEN = (125, 255, 125)
+YELLOW = (255, 255, 100)
+RED = (255, 100, 100)
+font = pygame.font.Font(None, 75)
+skyfont = pygame.font.Font(None, 40)
+
+newRound()
+
+class Card():
+    def __init__(self, value, position):
+        super().__init__()
+        self.image = pygame.Surface((card_width, card_height))
+        self.rect = self.image.get_rect()
+        self.value = value
+        self.position = position
+
+        if self.value is None:
+            self.image.fill(DEFAULT)
+        else:
+            if self.value < 0:
+                self.image.fill(DEEP_BLUE)
+            if self.value == 0:
+                self.image.fill(LIGHT_BLUE)
+            if self.value > 0 and self.value < 5:
+                self.image.fill(GREEN)
+            if self.value >= 5 and self.value < 9:
+                self.image.fill(YELLOW)
+            if self.value >= 9:
+                self.image.fill(RED)
+
+        self.color = (0, 0, 0)
+
+        width = card_width
+        height = card_height
+        pygame.draw.rect(self.image, self.color, [0, 0, width, height], 3)
+
+        if self.value is None:
+            text = skyfont.render("SKYJO", True, self.color)
+            self.image.blit(text, [7.5, card_height/2 - 15, text.get_rect().width, text.get_rect().height])
+        else:
+            text = font.render(str(value).capitalize(), True, self.color)
+            if len(str(value)) == 2:
+                self.image.blit(text, [card_width/2 - 27, card_height/2 - 25, text.get_rect().width, text.get_rect().height])
+            if len(str(value)) == 1:
+                self.image.blit(text, [card_width/2 - 15, card_height/2 - 25, text.get_rect().width, text.get_rect().height])
+
+    def moveTo(self, x, y):
+        self.rect.x = (x - card_width / 2)
+        self.rect.y = (y - card_height / 2)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+
+    def getRect(self):
+        return self.rect
+    
 while running:
+    playerOneGameCards = []
+    playerTwoGameCards = []
+    keys = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
     
     window.fill((95, 141, 186))
 
-    card_width = 100
-    card_height = 150
-    card_x = (boundsX - card_width) // 2
-    card_y = (boundsY - card_height) // 2 
-    red = 150
-    green = 125
-    blue = 255
+    i = 0
+    for y in range(3):
+        for x in range(4):
+            newCard = Card(playerOneVisible[i], i)
+            newCard.moveTo((boundsX / 10) + (x * 105), (boundsY / 4) + (y * 200))
+            newCard.draw(window)
+            playerOneGameCards.append(newCard)
 
-    baseRect = pygame.draw.rect(window, (red, green, blue), (card_x, card_y, card_width, card_height), border_radius=10)
-    pygame.draw.rect(window, (0, 0, 0), (card_x, card_y, card_width, card_height), 3)
+            newCard = Card(playerTwoVisible[i], i)
+            newCard.moveTo((boundsX / 10) + (x * 105) + 500, (boundsY / 4) + (y * 200))
+            newCard.draw(window)
+            playerTwoGameCards.append(newCard)
+            i += 1
 
-    font = pygame.font.Font(None, 45)
-    suit_text = font.render("Skyjo", True, (0, 0, 0))
-    suit_text_rect = suit_text.get_rect(center=(card_x + 50, card_y + 70))
-    window.blit(suit_text, suit_text_rect)
-
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        mouse_pos = pygame.mouse.get_pos()
+        for card in playerOneGameCards:
+            if card.getRect().collidepoint(mouse_pos):
+                i = card.position
+                playerOneVisible[i] = playerOneTotal[i]
+                
+        for card in playerTwoGameCards:
+            if card.getRect().collidepoint(mouse_pos):
+                i = card.position
+                playerTwoVisible[i] = playerTwoTotal[i]
+                
 
     pygame.display.flip()
 
+
 # if running:
-newRound()
