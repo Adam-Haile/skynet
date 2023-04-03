@@ -3,11 +3,11 @@ import numpy as np
 import random
 import randomBot
 import middleBot
-import time
+import speedBot
 
 cards = []
-player1 = None
-player2 = middleBot.Middle
+player1 = speedBot.Speed()
+player2 = middleBot.Middle()
 playerOne = 0
 playerTwo = 0
 currentPlayer = 0
@@ -32,11 +32,19 @@ def newRound():
         playerOneTotal.insert(0, drawDeck())
         playerTwoTotal.insert(0, drawDeck())
 
-    for i in range(2):
-        pos = random.randint(0, 11)
-        playerOneVisible[pos] = playerOneTotal[pos]
-        pos = random.randint(0, 11)
-        playerTwoVisible[pos] = playerTwoTotal[pos]
+    pos1 = random.randint(0, 11)
+    pos2 = random.randint(0, 11)
+    while(pos1 == pos2):
+        pos2 = random.randint(0, 11)
+    playerOneVisible[pos1] = playerOneTotal[pos1]
+    playerOneVisible[pos2] = playerOneTotal[pos2]
+
+    pos1 = random.randint(0, 11)
+    pos2 = random.randint(0, 11)
+    while(pos1 == pos2):
+        pos2 = random.randint(0, 11)
+    playerTwoVisible[pos1] = playerTwoTotal[pos1]
+    playerTwoVisible[pos2] = playerTwoTotal[pos2]
 
     if lastWinner is None:
         global currentPlayer
@@ -46,8 +54,6 @@ def newRound():
             currentPlayer = 2
     else:
         currentPlayer = lastWinner
-
-    print(getRoundState())
 
 
 def getPlayerScore(player):
@@ -217,7 +223,8 @@ class Card():
 topDiscard = Card(None)
 
 def tallyRoundScore():
-    if isRoundOver() is not 0:
+    if isRoundOver() != 0:
+        global running
         global playerOne
         global playerTwo
         global playerOneVisible
@@ -242,6 +249,7 @@ def tallyRoundScore():
         playerTwoTotal.clear()
         playerTwoVisible.clear()
         playerTwoVisible = [None] * 12
+
         if running:
             global swapFromDeck
             global swapFromDiscard
@@ -256,7 +264,14 @@ def tallyRoundScore():
             roundOver = False
             topDiscard = Card(None)
 
-        newRound()
+        if playerOne >= 100:
+            print("Player 2 wins!")
+            exit()
+        elif playerTwo >= 100:
+            print("Player 1 wins!")
+            exit()
+        else:
+            newRound()
 
 
 def cardChoice(choice):
@@ -424,7 +439,7 @@ while running:
 
     if currentPlayer == 1 and player1 is not None:
         cardChoice(player1.getCardChoice(getRoundState()))
-        playerTwoPlacementChoice(player1.getPlacementChoice(getRoundState()))
+        playerOnePlacementChoice(player1.getPlacementChoice(getRoundState()))
     if currentPlayer == 2 and player2 is not None:
         cardChoice(player2.getCardChoice(getRoundState()))
         playerTwoPlacementChoice(player2.getPlacementChoice(getRoundState()))

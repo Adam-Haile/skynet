@@ -1,8 +1,8 @@
 import random
 
 class Random():
-    def getCardChoice(gamestate):
+    def getCardChoice(self, gamestate):
         return random.randint(0, 1)
 
-    def getPlacementChoice(gamestate):
+    def getPlacementChoice(self, gamestate):
         return random.randint(0, 11)

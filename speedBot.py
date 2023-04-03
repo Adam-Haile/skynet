@@ -1,4 +1,4 @@
-class Middle():
+class Speed():
     def getCardChoice(self, gamestate):
         discard = gamestate[6]
         if discard == None:
@@ -14,15 +14,15 @@ class Middle():
         i = 0
         for card in board:
             if card is not None:
-                if drawnCard < card:
-                    return i       
+                if card > 4 and drawnCard < card:
+                    return i
             i += 1
-        
+            
         i = 0
         for card in board:
             if card is None:
                 return i
             i += 1
-        
-        return 0
 
+        return 0
+        
