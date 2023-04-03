@@ -1,5 +1,3 @@
-# test
-
 import pygame
 import numpy as np
 import random
