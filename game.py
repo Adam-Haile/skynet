@@ -17,7 +17,6 @@ playerOneVisible = [None] * 12
 playerTwoTotal = []
 playerTwoVisible = [None] * 12
 discardedCards = []
-# specialRules = False 
 
 def newRound():
     for i in range(5):
@@ -139,48 +138,6 @@ def switchCurrent():
         currentPlayer = 2
     elif currentPlayer == 2:
         currentPlayer = 1
-
-# def checkForColumns():
-#     i = 0
-#     for x in range(4):
-#         cardOne = -3
-#         cardTwo = -3
-#         cardThree = -3
-#         j = 0
-#         for y in range(3):
-#             if j == 0:
-#                 cardOne = playerOneVisible[i]
-#             if j == 1:
-#                 cardTwo = playerOneVisible[i]
-#             if j == 2:
-#                 cardThree = playerOneVisible[i]
-#             j += 1
-#             i += 1
-#         if cardOne != -3 and (cardOne == cardTwo == cardThree):
-#             playerOneVisible.pop(i)
-#             playerOneVisible.pop(i - 1)
-#             playerOneVisible.pop(i - 2)
-
-#     i = 0
-#     for x in range(4):
-#         cardOne = -3
-#         cardTwo = -3
-#         cardThree = -3
-#         j = 0
-#         for y in range(3):
-#             if j == 0:
-#                 cardOne = playerTwoVisible[i]
-#             if j == 1:
-#                 cardTwo = playerTwoVisible[i]
-#             if j == 2:
-#                 cardThree = playerTwoVisible[i]
-#             j += 1
-#             i += 1
-#         if cardOne != -3 and (cardOne == cardTwo == cardThree):
-#             playerTwoVisible.pop(i)
-#             playerTwoVisible.pop(i - 1)
-#             playerTwoVisible.pop(i - 2)
-
 
 running = True
 newRound()
