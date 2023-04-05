@@ -1,4 +1,9 @@
 class Speed():
+    def __init__(self, pB=3, pS=4, pT=5):
+        self.pB = pB
+        self.pS = pS
+        self.pT = pT
+
     def getCardChoice(self, gamestate):
         discard = gamestate[6]
         if discard == None:
@@ -9,7 +14,7 @@ class Speed():
             return 1
     
     def getPlacementChoice(self, gamestate):
-        board = gamestate[3]
+        board = gamestate[self.pB]
         drawnCard = gamestate[7]
         i = 0
         for card in board:

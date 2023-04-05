@@ -1,13 +1,13 @@
 import pygame
 import numpy as np
 import random
-import randomBot
-import middleBot
-import speedBot
+import bots
+import time
 
 cards = []
-player1 = speedBot.Speed()
-player2 = middleBot.Middle()
+#(3, 4, 5, 0, 1, 2)
+player1 = bots.Middle()
+player2 = bots.Smart()
 playerOne = 0
 playerTwo = 0
 currentPlayer = 0
@@ -76,7 +76,7 @@ def shuffle():
 def drawDeck():
     if len(cards) == 0:
         topCard = discardedCards[0]
-        for i in range(1, len(discardedCards) + 1):
+        for i in range(1, len(discardedCards)):
             cards.append(discardedCards[i])
         discardedCards.clear()
         discardedCards.append(topCard)
@@ -106,7 +106,7 @@ def getRoundState():
     playerOneScore = getPlayerScore(1)
     playerTwoScore = getPlayerScore(2)
     roundState = (playerOneVisible, playerOneScore, playerOne,
-                  playerTwoVisible, playerTwoScore, playerTwo, topDiscard, drawnCard, currentPlayer)
+                  playerTwoVisible, playerTwoScore, playerTwo, topDiscard, drawnCard)
     return roundState
 
 
@@ -264,14 +264,18 @@ def tallyRoundScore():
             roundOver = False
             topDiscard = Card(None)
 
-        if playerOne >= 100:
+        if playerOne >= 100 and playerOne > playerTwo:
             print("Player 2 wins!")
             exit()
-        elif playerTwo >= 100:
+        elif playerTwo >= 100 and playerTwo > playerOne:
             print("Player 1 wins!")
+            exit()
+        elif playerOne >= 100 and playerOne == playerTwo:
+            print("Game tied!")
             exit()
         else:
             newRound()
+        # newRound()
 
 
 def cardChoice(choice):
@@ -318,12 +322,14 @@ def playerTwoPlacementChoice(choice):
     if lastSwap:
         roundOver = True
 
-while running:
+playGame = True
+
+while playGame:
     playerOneGameCards = []
     playerTwoGameCards = []
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            playGame = False
 
     window.fill((95, 141, 186))
     i = 0
@@ -441,7 +447,12 @@ while running:
         cardChoice(player1.getCardChoice(getRoundState()))
         playerOnePlacementChoice(player1.getPlacementChoice(getRoundState()))
     if currentPlayer == 2 and player2 is not None:
-        cardChoice(player2.getCardChoice(getRoundState()))
-        playerTwoPlacementChoice(player2.getPlacementChoice(getRoundState()))
+        c = player2.getCardChoice(getRoundState())
+        # print(c)
+        cardChoice(c)
+        c = player2.getPlacementChoice(getRoundState())
+        # print(c)
+        playerTwoPlacementChoice(c)
 
     pygame.display.flip()
+    # time.sleep(0.1)
