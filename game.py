@@ -7,7 +7,7 @@ import time
 cards = []
 #(4, 5, 6, 7, 0, 1, 2, 3)
 player1 = None
-player2 = bots.Triple()
+player2 = None
 playerOne = 0
 playerTwo = 0
 currentPlayer = 0
@@ -19,6 +19,74 @@ playerTwoTotal = []
 playerTwoVisible = [None] * 12
 playerTwoCleared = -1
 discardedCards = []
+twoBot = True
+
+def randomBot():
+    global player1
+    global player2
+
+    rand = bots.Random()
+    mid = bots.Middle()
+    speed = bots.Speed()
+    smart = bots.Smart()
+    triple = bots.Triple()
+    if twoBot:
+        for i in range(2):
+            bot = random.randint(0, 4)
+            if bot == 0:
+                if i == 0:
+                    player1 = bots.Random(4, 5, 6, 7, 0, 1, 2, 3)
+                    print("Bot is RandomBot")
+                else:
+                    player2 = rand
+                    print("Bot is RandomBot")
+            elif bot == 1:
+                if i == 0:
+                    player1 = bots.Middle(4, 5, 6, 7, 0, 1, 2, 3)
+                    print("Bot is MiddleBot")
+                else:
+                    player2 = mid
+                    print("Bot is MiddleBot")
+            elif bot == 2:
+                if i == 0:
+                    player1 = bots.Speed(4, 5, 6, 7, 0, 1, 2, 3)
+                    print("Bot is SpeedBot")
+                else:
+                    player2 = speed
+                    print("Bot is SpeedBot")
+            elif bot == 3:
+                if i == 0:
+                    player1 = bots.Smart(4, 5, 6, 7, 0, 1, 2, 3)
+                    print("Bot is SmartBot")
+                else:
+                    player2 = smart
+                    print("Bot is SmartBot")
+            else:
+                if i == 0:
+                    player1 = bots.Triple(4, 5, 6, 7, 0, 1, 2, 3)
+                    print("Bot is TripleBot")
+                else:
+                    player2 = triple
+                    print("Bot is TripleBot")
+    else:
+        bot = random.randint(0, 4)
+        if bot == 0:
+            player2 = rand
+            print("Bot is RandomBot")
+        elif bot == 1:
+            player2 = mid
+            print("Bot is MiddleBot")
+        elif bot == 2:
+            player2 = speed
+            print("Bot is SpeedBot")
+        elif bot == 3:
+            player2 = smart
+            print("Bot is SmartBot")
+        else:
+            player2 = triple
+            print("Bot is TripleBot")
+
+randomBot()
 
 def newRound():
     for i in range(5):
@@ -173,7 +241,6 @@ RED = (255, 100, 100)
 font = pygame.font.Font(None, 75)
 skyfont = pygame.font.Font(None, 40)
 smallfont = pygame.font.Font(None, 22)
-
 
 class Card():
     def __init__(self, value, position=0):
@@ -349,6 +416,9 @@ def checkPlayerColumns(player):
             card_two = playerOneVisible[i + 4]
             card_three = playerOneVisible[i + 8]
             if card_one is not None and (card_one == card_two == card_three):
+                discard(card_one)
+                discard(card_two)
+                discard(card_three)
                 playerOneCleared = i
                 playerOneTotal[i - 8] = None
                 playerOneTotal[i - 4] = None
@@ -510,4 +580,5 @@ while playGame:
         playerTwoPlacementChoice(c)
 
     pygame.display.flip()
-    time.sleep(0.25)
+    if twoBot:
+        time.sleep(0.25)
