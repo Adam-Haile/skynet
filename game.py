@@ -5,17 +5,19 @@ import bots
 import time
 
 cards = []
-#(3, 4, 5, 0, 1, 2)
-player1 = bots.Middle()
-player2 = bots.Smart()
+#(4, 5, 6, 7, 0, 1, 2, 3)
+player1 = None
+player2 = bots.Triple()
 playerOne = 0
 playerTwo = 0
 currentPlayer = 0
 lastWinner = None
 playerOneTotal = []
 playerOneVisible = [None] * 12
+playerOneCleared = -1
 playerTwoTotal = []
 playerTwoVisible = [None] * 12
+playerTwoCleared = -1
 discardedCards = []
 
 def newRound():
@@ -105,8 +107,8 @@ def getRoundState():
         topDiscard = discardedCards[0]
     playerOneScore = getPlayerScore(1)
     playerTwoScore = getPlayerScore(2)
-    roundState = (playerOneVisible, playerOneScore, playerOne,
-                  playerTwoVisible, playerTwoScore, playerTwo, topDiscard, drawnCard)
+    roundState = (playerOneVisible, playerOneScore, playerOne, playerOneCleared,
+                  playerTwoVisible, playerTwoScore, playerTwo, playerTwoCleared, topDiscard, drawnCard)
     return roundState
 
 
@@ -141,8 +143,12 @@ def switchCurrent():
     global currentPlayer
 
     if currentPlayer == 1:
+        checkPlayerColumns(2)
+        checkPlayerColumns(1)
         currentPlayer = 2
     elif currentPlayer == 2:
+        checkPlayerColumns(1)
+        checkPlayerColumns(2)
         currentPlayer = 1
 
 running = True
@@ -229,10 +235,16 @@ def tallyRoundScore():
         global playerTwo
         global playerOneVisible
         global playerTwoVisible
+        global playerOneCleared
+        global playerTwoCleared
 
         lastWinner = isRoundOver()
-        playerOneScore = getPlayerScore(1)
-        playerTwoScore = getPlayerScore(2)
+        playerOneScore = 0
+        for card in playerOneTotal:
+            playerOneScore += card if card is not None else 0
+        playerTwoScore = 0
+        for card in playerTwoTotal:
+            playerTwoScore += card if card is not None else 0
 
         if lastWinner == 1 and playerOneScore >= playerTwoScore:
             playerOneScore *= 2
@@ -246,9 +258,11 @@ def tallyRoundScore():
         playerOneTotal.clear()
         playerOneVisible.clear()
         playerOneVisible = [None] * 12
+        playerOneCleared = -1
         playerTwoTotal.clear()
         playerTwoVisible.clear()
         playerTwoVisible = [None] * 12
+        playerTwoCleared = -1
 
         if running:
             global swapFromDeck
@@ -322,6 +336,46 @@ def playerTwoPlacementChoice(choice):
     if lastSwap:
         roundOver = True
 
+def checkPlayerColumns(player):
+    global playerOneCleared
+    global playerTwoCleared
+    global playerOneTotal
+    global playerTwoTotal
+
+    if player == 1 and playerOneCleared == -1:
+        i = 0
+        for x in range(4):
+            card_one = playerOneVisible[i]
+            card_two = playerOneVisible[i + 4]
+            card_three = playerOneVisible[i + 8]
+            if card_one is not None and (card_one == card_two == card_three):
+                playerOneCleared = i
+                playerOneTotal[i - 8] = None
+                playerOneTotal[i - 4] = None
+                playerOneTotal[i] = None
+                playerOneVisible[i - 8] = None
+                playerOneVisible[i - 4] = None
+                playerOneVisible[i] = None
+                return 1
+            i += 1
+    
+    if player == 2 and playerTwoCleared == -1:
+        i = 0
+        for x in range(4):
+            card_one = playerTwoVisible[i]
+            card_two = playerTwoVisible[i + 4]
+            card_three = playerTwoVisible[i + 8]
+            if card_one is not None and (card_one == card_two == card_three):
+                playerTwoCleared = i
+                playerTwoTotal[i - 8] = None
+                playerTwoVisible[i - 8] = None
+                playerTwoTotal[i - 4] = None
+                playerTwoVisible[i - 4] = None
+                playerTwoTotal[i] = None
+                playerTwoVisible[i] = None
+                return 1
+            i += 1
+
 playGame = True
 
 while playGame:
@@ -373,17 +427,18 @@ while playGame:
 
     for y in range(3):
         for x in range(4):
-            newCard = Card(playerOneVisible[i], i)
-            newCard.moveTo((boundsX / 10) + (x * 105),
-                            (boundsY / 4) + (y * 200) - 25)
-            newCard.draw(window)
-            playerOneGameCards.append(newCard)
+            if playerOneTotal[i] is not None:
+                newCard = Card(playerOneVisible[i], i)
+                newCard.moveTo((boundsX / 10) + (x * 105), (boundsY / 4) + (y * 200) - 25)
+                newCard.draw(window)
+                playerOneGameCards.append(newCard)
 
-            newCard = Card(playerTwoVisible[i], i)
-            newCard.moveTo((boundsX / 10) + (x * 105) + 500,
-                            (boundsY / 4) + (y * 200) - 25)
-            newCard.draw(window)
-            playerTwoGameCards.append(newCard)
+            if playerTwoTotal[i] is not None:
+                newCard = Card(playerTwoVisible[i], i)
+                newCard.moveTo((boundsX / 10) + (x * 105) + 500, (boundsY / 4) + (y * 200) - 25)
+                newCard.draw(window)
+                playerTwoGameCards.append(newCard)
+
             i += 1
 
     if len(discardedCards) > 0:
@@ -455,4 +510,4 @@ while playGame:
         playerTwoPlacementChoice(c)
 
     pygame.display.flip()
-    # time.sleep(0.1)
+    time.sleep(0.25)
