@@ -4,7 +4,7 @@ import bots
 import random
 import time
 
-twoBot = False
+twoBot = True
 
 def randomBot():
     rand = bots.Random()
@@ -68,8 +68,8 @@ def randomBot():
             g.player2 = triple
             print("Bot is TripleBot")
 
-# randomBot()
-g.initializeBots(bots.Random())
+randomBot()
+# g.initializeBots(bots.Random())
 g.newRound()
 
 running = True
@@ -307,9 +307,11 @@ while running:
 
     if g.currentPlayer == 1 and g.player1 is not None:
         g.cardChoice(g.player1.getCardChoice(g.getRoundState()))
+        g.dumpDrawn(g.player1.getKeepChoice(g.getRoundState()))
         g.playerOnePlacementChoice(g.player1.getPlacementChoice(g.getRoundState()))
     if g.currentPlayer == 2 and g.player2 is not None:
         g.cardChoice(g.player2.getCardChoice(g.getRoundState()))
+        g.dumpDrawn(g.player2.getKeepChoice(g.getRoundState()))
         g.playerTwoPlacementChoice(g.player2.getPlacementChoice(g.getRoundState()))
 
     pygame.display.flip()

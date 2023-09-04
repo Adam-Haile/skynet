@@ -13,6 +13,9 @@ class Random():
 
     def getCardChoice(self, gamestate):
         return random.randint(0, 1)
+    
+    def getKeepChoice(self, gamestate):
+        return random.randint(0, 1)
 
     def getPlacementChoice(self, gamestate):
         choice = random.randint(0, 11)
@@ -38,6 +41,13 @@ class Middle():
         if discard == None:
             return 0
         if discard >= 7:
+            return 0
+        else:
+            return 1
+    
+    def getKeepChoice(self, gamestate):
+        drawn = gamestate[9]
+        if drawn >= 7:
             return 0
         else:
             return 1
@@ -88,6 +98,13 @@ class Speed():
         if discard == None:
             return 0
         if discard >= 7:
+            return 0
+        else:
+            return 1
+        
+    def getKeepChoice(self, gamestate):
+        drawn = gamestate[9]
+        if drawn >= 7:  
             return 0
         else:
             return 1
@@ -142,7 +159,15 @@ class Smart():
             if card is not None:
                 if card > discard:
                     return 1
-                
+        return 0
+    
+    def getKeepChoice(self, gamestate):
+        drawn = gamestate[7]
+        for card in gamestate[self.pB]:
+            if card is not None:
+                if drawn < card and drawn < 9:
+                    return 1
+        
         return 0
 
     
@@ -228,6 +253,15 @@ class Triple():
         if discard >= 7:
             return 0
         elif discard in gamestate[self.pB] and gamestate[self.pC] == 0:
+            return 0
+        else:
+            return 1
+        
+    def getKeepChoice(self, gamestate):
+        drawn = gamestate[7]
+        if drawn in gamestate[self.pB]:
+            return 1
+        elif drawn >= 7:
             return 0
         else:
             return 1
