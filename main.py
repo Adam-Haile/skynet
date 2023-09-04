@@ -68,7 +68,8 @@ def randomBot():
             g.player2 = triple
             print("Bot is TripleBot")
 
-g.initializeBots(bots.Smart())
+# randomBot()
+g.initializeBots(bots.Random())
 g.newRound()
 
 running = True
@@ -94,12 +95,13 @@ skyfont = pygame.font.Font(None, 40)
 smallfont = pygame.font.Font(None, 22)
 
 class Card():
-    def __init__(self, value, position=0):
+    def __init__(self, value, hidden_value=12, position=0):
         super().__init__()
         self.image = pygame.Surface((card_width, card_height))
         self.rect = self.image.get_rect()
         self.value = value
         self.position = position
+        self.hidden_value = hidden_value
 
         if self.value is None:
             self.image.fill(DEFAULT)
@@ -146,7 +148,7 @@ class Card():
     
 
 topDiscard = Card(None)
-
+cardDrawn = None
 
 while running:
     playerOneGameCards = []
@@ -198,13 +200,13 @@ while running:
     for y in range(3):
         for x in range(4):
             if g.playerOneTotal[i] is not None:
-                newCard = Card(g.playerOneVisible[i], i)
+                newCard = Card(g.playerOneVisible[i], g.playerOneTotal[i], i)
                 newCard.moveTo((boundsX / 10) + (x * 105), (boundsY / 4) + (y * 200) - 25)
                 newCard.draw(window)
                 playerOneGameCards.append(newCard)
 
             if g.playerTwoTotal[i] is not None:
-                newCard = Card(g.playerTwoVisible[i], i)
+                newCard = Card(g.playerTwoVisible[i], g.playerOneTotal[i], i)
                 newCard.moveTo((boundsX / 10) + (x * 105) + 500, (boundsY / 4) + (y * 200) - 25)
                 newCard.draw(window)
                 playerTwoGameCards.append(newCard)
@@ -231,20 +233,31 @@ while running:
         if g.currentPlayer == 1:
             for card in playerOneGameCards:
                 if card.getRect().collidepoint(mouse_pos):
-                    if g.swapFromDeck is True or g.swapFromDiscard is True:
+                    if (g.swapFromDeck is True or g.swapFromDiscard is True) and g.keepDrawn:
                         g.switchCurrent()
                         g.discard(g.playerOneTotal[card.position])
                         g.swapCard(1, card.position, g.drawnCard)
                         g.drawnCard = -3
                         g.swapFromDeck = False
                         g.swapFromDiscard = False
+                        g.keepDrawn = True
                         if g.lastSwap:
                             g.roundOver = True
+                    elif (g.swapFromDeck is True or g.swapFromDiscard is True) and not g.keepDrawn:
+                        if card.value != card.hidden_value:
+                            g.switchCurrent()
+                            g.swapCard(1, card.position, card.hidden_value)
+                            g.drawnCard = -3
+                            g.swapFromDeck = False
+                            g.swapFromDiscard = False
+                            g.keepDrawn = True
+                            if g.lastSwap:
+                                g.roundOver = True
 
         if g.currentPlayer == 2:
             for card in playerTwoGameCards:
                 if card.getRect().collidepoint(mouse_pos):
-                    if g.swapFromDeck is True or g.swapFromDiscard is True:
+                    if (g.swapFromDeck is True or g.swapFromDiscard is True) and g.keepDrawn:
                         g.switchCurrent()
                         g.discard(g.playerTwoTotal[card.position])
                         g.swapCard(2, card.position, g.drawnCard)
@@ -253,8 +266,23 @@ while running:
                         g.swapFromDiscard = False
                         if g.lastSwap:
                             g.roundOver = True
+                    elif (g.swapFromDeck is True or g.swapFromDiscard is True) and not g.keepDrawn:
+                        if card.value != card.hidden_value:
+                            g.switchCurrent()
+                            g.swapCard(1, card.position, card.hidden_value)
+                            g.drawnCard = -3
+                            g.swapFromDeck = False
+                            g.swapFromDiscard = False
+                            g.keepDrawn = True
+                            if g.lastSwap:
+                                g.roundOver = True
 
-        if deck.getRect().collidepoint(mouse_pos) and g.swapFromDiscard is False and g.drawnCard == -3:
+        if cardDrawn is not None and cardDrawn.getRect().collidepoint(mouse_pos) and g.keepDrawn and g.drawnCard != -3:
+            g.dumpDrawn(0)
+            g.drawnCard = -3
+            cardDrawn = None
+
+        if deck.getRect().collidepoint(mouse_pos) and g.swapFromDiscard is False and g.drawnCard == -3 and g.keepDrawn:
             g.swapFromDeck = True
             g.drawnCard = g.drawDeck()
 
@@ -266,24 +294,23 @@ while running:
         g.lastSwap = True
 
     if g.roundOver:
-        result = g.tallyRoundScore()
+        result = g.tallyRoundScore(running)
         if result == 1:
             print("Player 1 Wins!")
+            running = False
         elif result == 2:
             print("Player 2 Wins!")
+            running = False
         elif result == 3:
             print("Players tied!")
+            running = False
 
     if g.currentPlayer == 1 and g.player1 is not None:
         g.cardChoice(g.player1.getCardChoice(g.getRoundState()))
         g.playerOnePlacementChoice(g.player1.getPlacementChoice(g.getRoundState()))
     if g.currentPlayer == 2 and g.player2 is not None:
-        c = g.player2.getCardChoice(g.getRoundState())
-        # print(c)
-        g.cardChoice(c)
-        c = g.player2.getPlacementChoice(g.getRoundState())
-        # print(c)
-        g.playerTwoPlacementChoice(c)
+        g.cardChoice(g.player2.getCardChoice(g.getRoundState()))
+        g.playerTwoPlacementChoice(g.player2.getPlacementChoice(g.getRoundState()))
 
     pygame.display.flip()
     if twoBot:

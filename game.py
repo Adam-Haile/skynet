@@ -8,7 +8,7 @@ player2 = None
 playerOne = 0
 playerTwo = 0
 currentPlayer = 0
-lastWinner = None
+lastOut = None
 playerOneTotal = []
 playerOneVisible = [None] * 12
 playerOneCleared = -1
@@ -22,6 +22,7 @@ swapFromDiscard = False
 drawnCard = -3
 lastSwap = False
 roundOver = False
+keepDrawn = True
 
 def initializeBots(p2=None, p1=None):
     global player1
@@ -44,28 +45,29 @@ def newRound():
         playerOneTotal.insert(0, drawDeck())
         playerTwoTotal.insert(0, drawDeck())
 
-    pos1 = random.randint(0, 11)
-    pos2 = random.randint(0, 11)
-    while(pos1 == pos2):
-        pos2 = random.randint(0, 11)
-    playerOneVisible[pos1] = playerOneTotal[pos1]
-    playerOneVisible[pos2] = playerOneTotal[pos2]
-
-    pos1 = random.randint(0, 11)
-    pos2 = random.randint(0, 11)
-    while(pos1 == pos2):
-        pos2 = random.randint(0, 11)
-    playerTwoVisible[pos1] = playerTwoTotal[pos1]
-    playerTwoVisible[pos2] = playerTwoTotal[pos2]
-
-    if lastWinner is None:
+    if lastOut is None:
         global currentPlayer
+        pos1 = random.randint(0, 11)
+        pos2 = random.randint(0, 11)
+        while(pos1 == pos2):
+            pos2 = random.randint(0, 11)
+        playerOneVisible[pos1] = playerOneTotal[pos1]
+        playerOneVisible[pos2] = playerOneTotal[pos2]
+
+        pos1 = random.randint(0, 11)
+        pos2 = random.randint(0, 11)
+        while(pos1 == pos2):
+            pos2 = random.randint(0, 11)
+        playerTwoVisible[pos1] = playerTwoTotal[pos1]
+        playerTwoVisible[pos2] = playerTwoTotal[pos2]
+
         if getPlayerScore(1) >= getPlayerScore(2):
             currentPlayer = 1
         else:
             currentPlayer = 2
     else:
-        currentPlayer = lastWinner
+        currentPlayer = lastOut
+    print(f"Starting Player: {currentPlayer}")
 
 
 def getPlayerScore(player):
@@ -117,13 +119,10 @@ def getRoundState():
 
 
 def isRoundOver():
-    roundOver = 0
     if playerOneTotal == playerOneVisible:
-        roundOver = 1
+        return 1
     if playerTwoTotal == playerTwoVisible:
-        roundOver = 2
-
-    return roundOver
+        return 2
 
 
 def isGameOver():
@@ -156,9 +155,8 @@ def switchCurrent():
         currentPlayer = 1
 
 
-def tallyRoundScore():
+def tallyRoundScore(running):
     if isRoundOver() != 0:
-        global running
         global playerOne
         global playerTwo
         global playerOneVisible
@@ -166,7 +164,7 @@ def tallyRoundScore():
         global playerOneCleared
         global playerTwoCleared
 
-        lastWinner = isRoundOver()
+        lastOut = isRoundOver()
         playerOneScore = 0
         for card in playerOneTotal:
             playerOneScore += card if card is not None else 0
@@ -174,9 +172,9 @@ def tallyRoundScore():
         for card in playerTwoTotal:
             playerTwoScore += card if card is not None else 0
 
-        if lastWinner == 1 and playerOneScore >= playerTwoScore:
+        if lastOut == 1 and playerOneScore >= playerTwoScore:
             playerOneScore *= 2
-        if lastWinner == 2 and playerTwoScore >= playerOneScore:
+        if lastOut == 2 and playerTwoScore >= playerOneScore:
             playerTwoScore *= 2
 
         playerOne += playerOneScore
@@ -230,6 +228,13 @@ def cardChoice(choice):
         else:
             cardChoice(0)
 
+def dumpDrawn(choice):
+    global keepDrawn
+    if (choice == 0):
+        keepDrawn = False
+        discard(drawnCard)
+    else:
+        keepDrawn = True
 
 def playerOnePlacementChoice(choice):
     global swapFromDeck
