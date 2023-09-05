@@ -11,13 +11,13 @@ class Random():
         self.pT = pT
         self.pC = pC
 
-    def getCardChoice(self, gamestate):
+    def get_card_choice(self, gamestate):
         return random.randint(0, 1)
     
-    def getKeepChoice(self, gamestate):
+    def get_keep_choice(self, gamestate):
         return random.randint(0, 1)
 
-    def getPlacementChoice(self, gamestate):
+    def get_placement_choice(self, gamestate):
         choice = random.randint(0, 11)
         if gamestate[self.pC] != -1:
             while choice == gamestate[self.pC] or gamestate[self.pC] + 4 or gamestate[self.pC] + 8:
@@ -36,7 +36,7 @@ class Middle():
         self.pT = pT
         self.pC = pC
 
-    def getCardChoice(self, gamestate):
+    def get_card_choice(self, gamestate):
         discard = gamestate[8]
         if discard == None:
             return 0
@@ -45,14 +45,14 @@ class Middle():
         else:
             return 1
     
-    def getKeepChoice(self, gamestate):
+    def get_keep_choice(self, gamestate):
         drawn = gamestate[9]
         if drawn >= 7:
             return 0
         else:
             return 1
     
-    def getPlacementChoice(self, gamestate):
+    def get_placement_choice(self, gamestate):
         board = gamestate[self.pB]
         drawnCard = gamestate[9]
         i = 0
@@ -93,7 +93,7 @@ class Speed():
         self.pT = pT
         self.pC = pC
 
-    def getCardChoice(self, gamestate):
+    def get_card_choice(self, gamestate):
         discard = gamestate[8]
         if discard == None:
             return 0
@@ -102,14 +102,14 @@ class Speed():
         else:
             return 1
         
-    def getKeepChoice(self, gamestate):
+    def get_keep_choice(self, gamestate):
         drawn = gamestate[9]
         if drawn >= 7:  
             return 0
         else:
             return 1
     
-    def getPlacementChoice(self, gamestate):
+    def get_placement_choice(self, gamestate):
         board = gamestate[self.pB]
         drawnCard = gamestate[9]
         i = 0
@@ -150,7 +150,7 @@ class Smart():
         self.pT = pT
         self.pC = pC
 
-    def getCardChoice(self, gamestate):
+    def get_card_choice(self, gamestate):
         discard = gamestate[8]
         if discard is None:
             return 0
@@ -159,19 +159,21 @@ class Smart():
             if card is not None:
                 if card > discard:
                     return 1
+        if discard < 4:
+            return 1
         return 0
     
-    def getKeepChoice(self, gamestate):
+    def get_keep_choice(self, gamestate):
         drawn = gamestate[7]
         for card in gamestate[self.pB]:
             if card is not None:
-                if drawn < card and drawn < 9:
+                if drawn < card and drawn < 7:
                     return 1
         
         return 0
 
     
-    def getPlacementChoice(self, gamestate):
+    def get_placement_choice(self, gamestate):
         board = gamestate[self.pB]
         noneCount = board.count(None)
         drawnCard = gamestate[9]
@@ -246,7 +248,7 @@ class Triple():
         self.pT = pT
         self.pC = pC
 
-    def getCardChoice(self, gamestate):
+    def get_card_choice(self, gamestate):
         discard = gamestate[8]
         if discard == None:
             return 0
@@ -257,7 +259,7 @@ class Triple():
         else:
             return 1
         
-    def getKeepChoice(self, gamestate):
+    def get_keep_choice(self, gamestate):
         drawn = gamestate[7]
         if drawn in gamestate[self.pB]:
             return 1
@@ -266,7 +268,7 @@ class Triple():
         else:
             return 1
         
-    def getPlacementChoice(self, gamestate):
+    def get_placement_choice(self, gamestate):
         board = gamestate[self.pB]
         drawnCard = gamestate[9]
         i = 0
