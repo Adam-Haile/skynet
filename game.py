@@ -101,8 +101,10 @@ class Skyjo():
             self.player_two_visible[pos1] = self.player_two_total[pos1]
             self.player_two_visible[pos2] = self.player_two_total[pos2]
 
-            # TODO: Add back in logic and refix to allow either player to start depending on points
-            self.current_player = 2
+            if self.get_player_score(1) >= self.get_player_score(2):
+                self.current_player = 1
+            else:
+                self.current_player = 2
         else:
             self.current_player = self.last_out
 
