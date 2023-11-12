@@ -33,44 +33,21 @@ class Skyjo():
         new_game.new_round()
         return new_game
 
-    def step(self, action):
-        if self.current_action == 0:
-            action = round(action / 12)
-            self.card_choice(action)
-            self.current_action = 1
-        elif self.current_action == 1:
-            action = round(action / 12)
-            self.dump_drawn(action)
-            self.current_action = 2
-        elif self.current_action == 2:
-            if self.current_player == 1:
-                self.player_one_placement_choice(action)
-            else:
-                self.player_two_placement_choice(action)
-            self.current_action = 0
-
-    def get_observation(self):
-        state = self.get_round_state()
-        full_state = []
-        for i in state[0]:
-            full_state.append(i)
-        for j in state[4]:
-            full_state.append(i)
-        full_state.append(state[8])
-        full_state.append(state[9])
-        return full_state
-    
-    def get_reward(self):
-        if self.is_game_over():
-            if self.player_one > self.player_two:
-                return 1
-            elif self.player_two > self.player_one:
-                return -1
-        return 0
-
     def initialize_bots(self, p2=None, p1=None):
         self.player1 = p1
         self.player2 = p2
+
+    def take_action(self, position, discard):
+        self.switch_current()
+        if discard:
+            discard(self.player_one_total[position])
+        self.swap_card(1, position, self.drawn_card)
+        self.drawn_card = -3
+        self.swap_from_deck = False
+        self.swap_from_discard = False
+        self.keep_drawn = True
+        if self.last_swap:
+            self.round_over = True
 
     def new_round(self):
         for i in range(5):
@@ -276,7 +253,7 @@ class Skyjo():
     def check_player_columns(self, player):
         if player == 1 and self.player_one_cleared == -1:
             i = 0
-            for x in range(4):
+            for _ in range(4):
                 card_one = self.player_one_visible[i]
                 card_two = self.player_one_visible[i + 4]
                 card_three = self.player_one_visible[i + 8]
@@ -296,7 +273,7 @@ class Skyjo():
         
         if player == 2 and self.player_two_cleared == -1:
             i = 0
-            for x in range(4):
+            for _ in range(4):
                 card_one = self.player_two_visible[i]
                 card_two = self.player_two_visible[i + 4]
                 card_three = self.player_two_visible[i + 8]
