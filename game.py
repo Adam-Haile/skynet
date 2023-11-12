@@ -29,7 +29,9 @@ class Skyjo():
         self.current_action = 0
 
     def reset(self):
-        return Skyjo(self.player1, self.player2)
+        new_game = Skyjo(self.player1, self.player2)
+        new_game.new_round()
+        return new_game
 
     def step(self, action):
         if self.current_action == 0:
@@ -48,7 +50,15 @@ class Skyjo():
             self.current_action = 0
 
     def get_observation(self):
-        return self.get_round_state()
+        state = self.get_round_state()
+        full_state = []
+        for i in state[0]:
+            full_state.append(i)
+        for j in state[4]:
+            full_state.append(i)
+        full_state.append(state[8])
+        full_state.append(state[9])
+        return full_state
     
     def get_reward(self):
         if self.is_game_over():
@@ -91,10 +101,8 @@ class Skyjo():
             self.player_two_visible[pos1] = self.player_two_total[pos1]
             self.player_two_visible[pos2] = self.player_two_total[pos2]
 
-            if self.get_player_score(1) >= self.get_player_score(2):
-                self.current_player = 1
-            else:
-                self.current_player = 2
+            # TODO: Add back in logic and refix to allow either player to start depending on points
+            self.current_player = 2
         else:
             self.current_player = self.last_out
 
