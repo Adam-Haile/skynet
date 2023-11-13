@@ -29,9 +29,7 @@ class Skyjo():
         self.current_action = 0
 
     def reset(self):
-        new_game = Skyjo(self.player1, self.player2)
-        new_game.new_round()
-        return new_game
+        self.__init__(self.player1, self.player2)
 
     def initialize_bots(self, p2=None, p1=None):
         self.player1 = p1
@@ -139,6 +137,7 @@ class Skyjo():
             return 1
         if self.player_two_total == self.player_two_visible:
             return 2
+        return 0
 
 
     def is_game_over(self):
