@@ -1,0 +1,492 @@
+<play> 2 
+<act> Draw 
+<state> ([None, None, None, 12, None, None, None, None, None, 4, None, None], 16, 109, -1, [None, None, 11, None, None, None, None, None, None, None, None, 6], 17, 99, -1, None, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([None, None, None, 12, None, None, None, None, None, 4, None, None], 16, 109, -1, [None, None, 11, None, None, None, None, None, None, None, None, 6], 17, 99, -1, None, 11)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([None, None, None, 12, None, None, None, None, None, 4, None, None], 16, 109, -1, [None, None, 11, None, None, None, None, None, None, None, None, 6], 17, 99, -1, 11, 11)
+<response> 0
+<play> 1 
+<act> Draw 
+<state> ([None, None, None, 12, None, None, None, None, None, 4, None, None], 16, 109, -1, [11, None, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 2, -3)
+<response> 1
+<play> 1 
+<act> Keep 
+<state> ([None, None, None, 12, None, None, None, None, None, 4, None, None], 16, 109, -1, [11, None, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 2, 8)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([None, None, None, 12, None, None, None, None, None, 4, None, None], 16, 109, -1, [11, None, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 8, 8)
+<response> 3
+<play> 2 
+<act> Draw 
+<state> ([None, None, None, 8, None, None, None, None, None, 4, None, None], 12, 109, -1, [11, None, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 12, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([None, None, None, 8, None, None, None, None, None, 4, None, None], 12, 109, -1, [11, None, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 12, 12)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([None, None, None, 8, None, None, None, None, None, 4, None, None], 12, 109, -1, [11, None, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 12, 12)
+<response> 1
+<play> 1 
+<act> Draw 
+<state> ([None, None, None, 8, None, None, None, None, None, 4, None, None], 12, 109, -1, [11, 12, 11, None, None, None, None, None, None, None, None, 6], 40, 99, -1, 8, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([None, None, None, 8, None, None, None, None, None, 4, None, None], 12, 109, -1, [11, 12, 11, None, None, None, None, None, None, None, None, 6], 40, 99, -1, 8, 11)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([None, None, None, 8, None, None, None, None, None, 4, None, None], 12, 109, -1, [11, 12, 11, None, None, None, None, None, None, None, None, 6], 40, 99, -1, 11, 11)
+<response> 0
+<play> 2 
+<act> Draw 
+<state> ([11, None, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [11, 12, 11, None, None, None, None, None, None, None, None, 6], 40, 99, -1, 4, -3)
+<response> 1
+<play> 2 
+<act> Keep 
+<state> ([11, None, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [11, 12, 11, None, None, None, None, None, None, None, None, 6], 40, 99, -1, 4, -1)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([11, None, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [11, 12, 11, None, None, None, None, None, None, None, None, 6], 40, 99, -1, 4, -1)
+<response> 0
+<play> 1 
+<act> Draw 
+<state> ([11, None, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 12, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 11, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([11, None, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 12, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 11, 9)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([11, None, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 12, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 9, 9)
+<response> 0
+<play> 2 
+<act> Draw 
+<state> ([9, None, None, 8, None, None, None, None, None, 4, None, None], 21, 109, -1, [-1, 12, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 11, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([9, None, None, 8, None, None, None, None, None, 4, None, None], 21, 109, -1, [-1, 12, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 11, 3)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([9, None, None, 8, None, None, None, None, None, 4, None, None], 21, 109, -1, [-1, 12, 11, None, None, None, None, None, None, None, None, 6], 28, 99, -1, 11, 3)
+<response> 1
+<play> 1 
+<act> Draw 
+<state> ([9, None, None, 8, None, None, None, None, None, 4, None, None], 21, 109, -1, [-1, 3, 11, None, None, None, None, None, None, None, None, 6], 19, 99, -1, 12, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([9, None, None, 8, None, None, None, None, None, 4, None, None], 21, 109, -1, [-1, 3, 11, None, None, None, None, None, None, None, None, 6], 19, 99, -1, 12, 4)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([9, None, None, 8, None, None, None, None, None, 4, None, None], 21, 109, -1, [-1, 3, 11, None, None, None, None, None, None, None, None, 6], 19, 99, -1, 12, 4)
+<response> 0
+<play> 2 
+<act> Draw 
+<state> ([4, None, None, 8, None, None, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, 11, None, None, None, None, None, None, None, None, 6], 19, 99, -1, 9, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, None, None, 8, None, None, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, 11, None, None, None, None, None, None, None, None, 6], 19, 99, -1, 9, -2)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, None, None, 8, None, None, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, 11, None, None, None, None, None, None, None, None, 6], 19, 99, -1, 9, -2)
+<response> 2
+<play> 1 
+<act> Draw 
+<state> ([4, None, None, 8, None, None, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, None, None, None, None, None, None, None, None, 6], 6, 99, -1, 11, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, None, None, 8, None, None, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, None, None, None, None, None, None, None, None, 6], 6, 99, -1, 11, 10)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([4, None, None, 8, None, None, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, None, None, None, None, None, None, None, None, 6], 6, 99, -1, 10, 10)
+<response> 1
+<play> 2 
+<act> Draw 
+<state> ([4, 10, None, 8, None, None, None, None, None, 4, None, None], 26, 109, -1, [-1, 3, -2, None, None, None, None, None, None, None, None, 6], 6, 99, -1, 10, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 10, None, 8, None, None, None, None, None, 4, None, None], 26, 109, -1, [-1, 3, -2, None, None, None, None, None, None, None, None, 6], 6, 99, -1, 10, 9)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 10, None, 8, None, None, None, None, None, 4, None, None], 26, 109, -1, [-1, 3, -2, None, None, None, None, None, None, None, None, 6], 6, 99, -1, 9, 9)
+<response> 3
+<play> 1 
+<act> Draw 
+<state> ([4, 10, None, 8, None, None, None, None, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 9, None, None, None, None, None, None, None, 6], 15, 99, -1, 5, -3)
+<response> 1
+<play> 1 
+<act> Keep 
+<state> ([4, 10, None, 8, None, None, None, None, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 9, None, None, None, None, None, None, None, 6], 15, 99, -1, 5, 7)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([4, 10, None, 8, None, None, None, None, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 9, None, None, None, None, None, None, None, 6], 15, 99, -1, 7, 7)
+<response> 1
+<play> 2 
+<act> Draw 
+<state> ([4, 7, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 3, -2, 9, None, None, None, None, None, None, None, 6], 15, 99, -1, 10, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 7, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 3, -2, 9, None, None, None, None, None, None, None, 6], 15, 99, -1, 10, 12)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 7, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 3, -2, 9, None, None, None, None, None, None, None, 6], 15, 99, -1, 12, 12)
+<response> 4
+<play> 1 
+<act> Draw 
+<state> ([4, 7, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 3, -2, 9, 12, None, None, None, None, None, None, 6], 27, 99, -1, 5, -3)
+<response> 1
+<play> 1 
+<act> Keep 
+<state> ([4, 7, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 3, -2, 9, 12, None, None, None, None, None, None, 6], 27, 99, -1, 5, 2)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 7, None, 8, None, None, None, None, None, 4, None, None], 23, 109, -1, [-1, 3, -2, 9, 12, None, None, None, None, None, None, 6], 27, 99, -1, 5, 2)
+<response> 1
+<play> 2 
+<act> Draw 
+<state> ([4, 2, None, 8, None, None, None, None, None, 4, None, None], 18, 109, -1, [-1, 3, -2, 9, 12, None, None, None, None, None, None, 6], 27, 99, -1, 7, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, None, 8, None, None, None, None, None, 4, None, None], 18, 109, -1, [-1, 3, -2, 9, 12, None, None, None, None, None, None, 6], 27, 99, -1, 7, 10)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 2, None, 8, None, None, None, None, None, 4, None, None], 18, 109, -1, [-1, 3, -2, 9, 12, None, None, None, None, None, None, 6], 27, 99, -1, 10, 10)
+<response> 4
+<play> 1 
+<act> Draw 
+<state> ([4, 2, None, 8, None, None, None, None, None, 4, None, None], 18, 109, -1, [-1, 3, -2, 9, 10, None, None, None, None, None, None, 6], 25, 99, -1, 12, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, None, 8, None, None, None, None, None, 4, None, None], 18, 109, -1, [-1, 3, -2, 9, 10, None, None, None, None, None, None, 6], 25, 99, -1, 12, 3)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, None, 8, None, None, None, None, None, 4, None, None], 18, 109, -1, [-1, 3, -2, 9, 10, None, None, None, None, None, None, 6], 25, 99, -1, 12, 3)
+<response> 3
+<play> 2 
+<act> Draw 
+<state> ([4, 2, None, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 9, 10, None, None, None, None, None, None, 6], 25, 99, -1, 8, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, None, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 9, 10, None, None, None, None, None, None, 6], 25, 99, -1, 8, 0)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, 2, None, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 9, 10, None, None, None, None, None, None, 6], 25, 99, -1, 8, 0)
+<response> 3
+<play> 1 
+<act> Draw 
+<state> ([4, 2, None, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 10, None, None, None, None, None, None, 6], 16, 99, -1, 9, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, None, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 10, None, None, None, None, None, None, 6], 16, 99, -1, 9, 0)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, None, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 10, None, None, None, None, None, None, 6], 16, 99, -1, 9, 0)
+<response> 2
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 10, None, None, None, None, None, None, 6], 16, 99, -1, 1, -3)
+<response> 1
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 10, None, None, None, None, None, None, 6], 16, 99, -1, 1, 9)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 10, None, None, None, None, None, None, 6], 16, 99, -1, 9, 9)
+<response> 4
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 9, None, None, None, None, None, None, 6], 15, 99, -1, 10, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 9, None, None, None, None, None, None, 6], 15, 99, -1, 10, 12)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, None, None, None, None, None, 4, None, None], 13, 109, -1, [-1, 3, -2, 0, 9, None, None, None, None, None, None, 6], 15, 99, -1, 12, 12)
+<response> 4
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 12, None, None, None, None, 4, None, None], 25, 109, -1, [-1, 3, -2, 0, 9, None, None, None, None, None, None, 6], 15, 99, -1, 4, -3)
+<response> 1
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 12, None, None, None, None, 4, None, None], 25, 109, -1, [-1, 3, -2, 0, 9, None, None, None, None, None, None, 6], 15, 99, -1, 4, 7)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 12, None, None, None, None, 4, None, None], 25, 109, -1, [-1, 3, -2, 0, 9, None, None, None, None, None, None, 6], 15, 99, -1, 7, 7)
+<response> 4
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 12, None, None, None, None, 4, None, None], 25, 109, -1, [-1, 3, -2, 0, 7, None, None, None, None, None, None, 6], 13, 99, -1, 9, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 12, None, None, None, None, 4, None, None], 25, 109, -1, [-1, 3, -2, 0, 7, None, None, None, None, None, None, 6], 13, 99, -1, 9, 1)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 12, None, None, None, None, 4, None, None], 25, 109, -1, [-1, 3, -2, 0, 7, None, None, None, None, None, None, 6], 13, 99, -1, 9, 1)
+<response> 4
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, None, None, None, None, 4, None, None], 14, 109, -1, [-1, 3, -2, 0, 7, None, None, None, None, None, None, 6], 13, 99, -1, 12, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, None, None, None, None, 4, None, None], 14, 109, -1, [-1, 3, -2, 0, 7, None, None, None, None, None, None, 6], 13, 99, -1, 12, -1)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, None, None, None, None, 4, None, None], 14, 109, -1, [-1, 3, -2, 0, 7, None, None, None, None, None, None, 6], 13, 99, -1, 12, -1)
+<response> 4
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, None, None, None, None, 4, None, None], 14, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 6], 5, 99, -1, 7, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, None, None, None, None, 4, None, None], 14, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 6], 5, 99, -1, 7, 2)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, None, None, None, None, 4, None, None], 14, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 6], 5, 99, -1, 7, 2)
+<response> 5
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 6], 5, 99, -1, 8, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 6], 5, 99, -1, 8, 0)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 6], 5, 99, -1, 8, 0)
+<response> 11
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 0], -1, 99, -1, 6, -3)
+<response> 1
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 0], -1, 99, -1, 6, 4)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, None, None, None, 4, None, None], 16, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 0], -1, 99, -1, 6, 4)
+<response> 6
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, None, None, 4, None, None], 20, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 0], -1, 99, -1, 0, -3)
+<response> 1
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, None, None, 4, None, None], 20, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 0], -1, 99, -1, 0, 9)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, None, None, 4, None, None], 20, 109, -1, [-1, 3, -2, 0, -1, None, None, None, None, None, None, 0], -1, 99, -1, 9, 9)
+<response> 5
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, None, None, 4, None, None], 20, 109, -1, [-1, 3, -2, 0, -1, 9, None, None, None, None, None, 0], 8, 99, -1, 9, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, None, None, 4, None, None], 20, 109, -1, [-1, 3, -2, 0, -1, 9, None, None, None, None, None, 0], 8, 99, -1, 9, 12)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, None, None, 4, None, None], 20, 109, -1, [-1, 3, -2, 0, -1, 9, None, None, None, None, None, 0], 8, 99, -1, 12, 12)
+<response> 7
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, 12, None, 4, None, None], 32, 109, -1, [-1, 3, -2, 0, -1, 9, None, None, None, None, None, 0], 8, 99, -1, 6, -3)
+<response> 1
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, 12, None, 4, None, None], 32, 109, -1, [-1, 3, -2, 0, -1, 9, None, None, None, None, None, 0], 8, 99, -1, 6, 8)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, 12, None, 4, None, None], 32, 109, -1, [-1, 3, -2, 0, -1, 9, None, None, None, None, None, 0], 8, 99, -1, 8, 8)
+<response> 5
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, 12, None, 4, None, None], 32, 109, -1, [-1, 3, -2, 0, -1, 8, None, None, None, None, None, 0], 7, 99, -1, 9, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, 12, None, 4, None, None], 32, 109, -1, [-1, 3, -2, 0, -1, 8, None, None, None, None, None, 0], 7, 99, -1, 9, 6)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, 12, None, 4, None, None], 32, 109, -1, [-1, 3, -2, 0, -1, 8, None, None, None, None, None, 0], 7, 99, -1, 9, 6)
+<response> 7
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, 6, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 0, -1, 8, None, None, None, None, None, 0], 7, 99, -1, 12, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, 6, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 0, -1, 8, None, None, None, None, None, 0], 7, 99, -1, 12, -2)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, 6, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 0, -1, 8, None, None, None, None, None, 0], 7, 99, -1, 12, -2)
+<response> 5
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, 6, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 0, -1, -2, None, None, None, None, None, 0], -3, 99, -1, 8, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, 6, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 0, -1, -2, None, None, None, None, None, 0], -3, 99, -1, 8, -1)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, 6, None, 4, None, None], 26, 109, -1, [-1, 3, -2, 0, -1, -2, None, None, None, None, None, 0], -3, 99, -1, 8, -1)
+<response> 7
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, None, 4, None, None], 19, 109, -1, [-1, 3, -2, 0, -1, -2, None, None, None, None, None, 0], -3, 99, -1, 6, -3)
+<response> 1
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, None, 4, None, None], 19, 109, -1, [-1, 3, -2, 0, -1, -2, None, None, None, None, None, 0], -3, 99, -1, 6, 3)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, None, 4, None, None], 19, 109, -1, [-1, 3, -2, 0, -1, -2, None, None, None, None, None, 0], -3, 99, -1, 6, 3)
+<response> 6
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, None, 4, None, None], 19, 109, -1, [-1, 3, -2, 0, -1, -2, 3, None, None, None, None, 0], 0, 99, -1, 1, -3)
+<response> 1
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, None, 4, None, None], 19, 109, -1, [-1, 3, -2, 0, -1, -2, 3, None, None, None, None, 0], 0, 99, -1, 1, 2)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, None, 4, None, None], 19, 109, -1, [-1, 3, -2, 0, -1, -2, 3, None, None, None, None, 0], 0, 99, -1, 1, 2)
+<response> 8
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, None, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, None, None, None, None, 0], 0, 99, -1, 7, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, None, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, None, None, None, None, 0], 0, 99, -1, 7, 7)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, None, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, None, None, None, None, 0], 0, 99, -1, 7, 7)
+<response> 7
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, None, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 7, None, None, None, 0], 7, 99, -1, 11, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, None, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 7, None, None, None, 0], 7, 99, -1, 11, 8)
+<response> 0
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, None, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 7, None, None, None, 0], 7, 99, -1, 8, 8)
+<response> 10
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 8, None], 29, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 7, None, None, None, 0], 7, 99, -1, 8, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 8, None], 29, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 7, None, None, None, 0], 7, 99, -1, 8, 2)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 8, None], 29, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 7, None, None, None, 0], 7, 99, -1, 8, 2)
+<response> 7
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 8, None], 29, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, None, None, None, 0], 2, 99, -1, 7, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 8, None], 29, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, None, None, None, 0], 2, 99, -1, 7, 0)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 8, None], 29, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, None, None, None, 0], 2, 99, -1, 7, 0)
+<response> 10
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, None, None, None, 0], 2, 99, -1, 8, -3)
+<response> 0
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, None, None, None, 0], 2, 99, -1, 8, 10)
+<response> 0
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, None, None, None, 0], 2, 99, -1, 10, 10)
+<response> 8
+<play> 1 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, 10, None, None, 0], 12, 99, -1, 9, -3)
+<response> 0
+<play> 1 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, 10, None, None, 0], 12, 99, -1, 9, 3)
+<response> 1
+<play> 1 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, None], 21, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, 10, None, None, 0], 12, 99, -1, 9, 3)
+<response> 11
+<play> 2 
+<act> Draw 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, 3], 24, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, 10, None, None, 0], 12, 99, -1, 5, -3)
+<response> 1
+<play> 2 
+<act> Keep 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, 3], 24, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, 10, None, None, 0], 12, 99, -1, 5, 4)
+<response> 1
+<play> 2 
+<act> Place 
+<state> ([4, 2, 0, 3, 1, 2, 4, -1, 2, 4, 0, 3], 24, 109, -1, [-1, 3, -2, 0, -1, -2, 3, 2, 10, None, None, 0], 12, 99, -1, 5, 4)
+<response> 8
