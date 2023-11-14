@@ -229,25 +229,37 @@ class Skyjo():
             self.keep_drawn = True
 
     def player_one_placement_choice(self, choice):
+        if self.keep_drawn:
+            discarded = self.player_one_total[choice]
+            self.discard(discarded)
+            self.swap_card(1, choice, self.drawn_card)
+        else:
+            discarded = None
+            self.swap_card(1, choice, self.player_one_total[choice])
         self.switch_current()
-        self.discard(self.player_one_total[choice])
-        self.swap_card(1, choice, self.drawn_card)
         self.drawn_card = -3
         self.swap_from_deck = False
         self.swap_from_discard = False
         if self.last_swap:
             self.round_over = True
+        return discarded
 
 
     def player_two_placement_choice(self, choice):
+        if self.keep_drawn:
+            discarded = self.player_two_total[choice]
+            self.discard(discarded)
+            self.swap_card(1, choice, self.drawn_card)
+        else:
+            discarded = None
+            self.swap_card(1, choice, self.player_two_total[choice])
         self.switch_current()
-        self.discard(self.player_two_total[choice])
-        self.swap_card(2, choice, self.drawn_card)
         self.drawn_card = -3
         self.swap_from_deck = False
         self.swap_from_discard = False
         if self.last_swap:
             self.round_over = True
+        return discarded
 
     def check_player_columns(self, player):
         if player == 1 and self.player_one_cleared == -1:

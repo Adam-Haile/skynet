@@ -26,6 +26,9 @@ class Random():
             selection = random.randint(0, 11)
         return selection
     
+    def discarded(self, discarded):
+        pass
+    
 
 class Middle():
     def __init__(self, opp_board=0, opp_score=1, opp_total=2, opp_cleared=3, per_board=4, per_score=5, per_total=6, per_cleared=7):
@@ -82,7 +85,9 @@ class Middle():
             i += 1
         
         return 0
-
+    
+    def discarded(self, discarded):
+        pass
 
 class Speed():
     def __init__(self, opp_board=0, opp_score=1, opp_total=2, opp_cleared=3, per_board=4, per_score=5, per_total=6, per_cleared=7):
@@ -139,6 +144,9 @@ class Speed():
             i += 1
 
         return 0
+
+    def discarded(self, discarded):
+        pass
         
 
 class Smart():
@@ -239,6 +247,9 @@ class Smart():
                 i += 1
             return 11
         
+    def discarded(self, discarded):
+        pass
+        
 class Triple():
     def __init__(self, opp_board=0, opp_score=1, opp_total=2, opp_cleared=3, per_board=4, per_score=5, per_total=6, per_cleared=7):
         self.opp_board = opp_board
@@ -316,3 +327,98 @@ class Triple():
             i += 1
 
         return 0
+    
+    def discarded(self, discarded):
+        pass
+    
+
+class Counter():
+    def __init__(self, opp_board=0, opp_score=1, opp_total=2, opp_cleared=3, per_board=4, per_score=5, per_total=6, per_cleared=7):
+        self.opp_board = opp_board
+        self.opp_score = opp_score
+        self.opp_total = opp_total
+        self.opp_cleared = opp_cleared
+        self.per_board = per_board
+        self.per_score = per_score
+        self.per_total = per_total
+        self.per_cleared = per_cleared
+        self.deck = {}
+        self.discard = []
+        self._reset_deck()
+
+    def get_card_choice(self, gamestate):
+        if gamestate[8] is not None:
+            self.discard.append(gamestate[8])
+            self._reset_deck()
+            for card in self.opp_board:
+                if card is not None:
+                    self.deck[card] -= 1
+            for card in self.per_board:
+                if card is not None:
+                    self.deck[card] -= 1
+            for card in self.discard:
+                self.deck[card] -= 1
+
+            deck_sum = sum(self.deck.values())
+            if deck_sum < 0:
+                return 0
+            else:
+                seven_or_greater_sum = sum([self.deck[i] for i in range(7, 13)])
+                less_than_seven_sum = sum([self.deck[i] for i in range(-2, 7)])
+                if seven_or_greater_sum > less_than_seven_sum:
+                    return 1
+                else:
+                    return 0
+        else:
+            return 0   
+        
+    def get_keep_choice(self, gamestate):
+        drawn = gamestate[7]
+        greater_than_drawn = sum([self.deck[i] for i in range(drawn, 13)])
+        less_than_drawn = sum([self.deck[i] for i in range(-2, drawn)])
+        if greater_than_drawn > less_than_drawn:
+            return 1
+        else:
+            return 0
+        
+    def get_placement_choice(self, gamestate):
+        board = gamestate[self.per_board]
+        drawnCard = gamestate[9]
+        i = 0
+        for card in board:
+            if gamestate[self.per_cleared] != -1:
+                if i != gamestate[self.per_cleared] and i != gamestate[self.per_cleared] + 4 and i != gamestate[self.per_cleared] + 8:
+                    if card is not None:
+                        if drawnCard < card:
+                            return i       
+            else:
+                if card is not None:
+                    if drawnCard < card:
+                        return i    
+            i += 1
+        
+        i = 0
+        for card in board:
+            if gamestate[self.per_cleared] != -1:
+                if i != gamestate[self.per_cleared] and i != gamestate[self.per_cleared] + 4 and i != gamestate[self.per_cleared] + 8:
+                    if card is None:
+                        return i
+            else:
+                 if card is None:
+                    return i
+            i += 1
+        
+        return 0
+
+    def discarded(self, discarded):
+        self.discard.append(discarded)
+         
+
+    def _reset_deck(self):
+        for i in range(-2, 13):
+            if i == -2:
+                self.deck[i] = 5
+            elif i == -1 or i != 0:
+                self.deck[i] = 10
+            elif i == 0:
+                self.deck[i] = 15
