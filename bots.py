@@ -26,20 +26,9 @@ class Random(Player):
         """
         return random.randint(0, 1)
     
-    def board_choice(self, players: List[Player]):
+    def board_choice(self, players: List[Player], legal_actions):
         """
         Randomly decides which spot to play the drawn card or flip a card if it does not have one.
-        Hsa safeguards in case:
-        - A column has been cleared (NoneType cards)
-        - The bot is flipping a card and can only be allowed to flip visible cards
+        Randomly chooses from the given legal actions
         """
-        if self.drawn_card is not None:
-            cards = [i for i, card in self.hand.items() if card is not None]
-            return random.choice(cards)
-        else:
-            # Get the indexes of all cards in the player's hand which are not visible
-            hidden_cards = [i for i, card in self.hand.items() if card is not None and not card.visible]
-            if hidden_cards:
-                return random.choice(hidden_cards)
-            
-            raise Exception("Illegal state")
+        return random.choice(legal_actions)

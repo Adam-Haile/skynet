@@ -209,7 +209,7 @@ class Player():
 
         return answer
     
-    def board_choice(self, players: List['Player']):
+    def board_choice(self, players: List['Player'], legal_actions: List[int]):
         """
         @param players: List of players
         @return: (0-11) The index of the card to replace or flip
@@ -298,8 +298,14 @@ class Skyjo():
         if second_action == 0:
             self.turn.discard_drawn(self.discard)
 
+        if self.turn.drawn_card is not None:
+            legal_actions = [i for i, card in self.turn.hand.items() if card is not None]
+        else:
+            # Get the indexes of all cards in the player's hand which are not visible
+            legal_actions = [i for i, card in self.turn.hand.items() if card is not None and not card.visible]
+
         # Flip or replace a card (third action for player)
-        third_action = self.turn.board_choice(self.players)
+        third_action = self.turn.board_choice(self.players, legal_actions)
         if self.turn.drawn_card != None:
             old_card = self.turn.replace_card(third_action, self.turn.drawn_card)
             self.turn.drawn_card = None
