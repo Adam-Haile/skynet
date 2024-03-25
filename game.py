@@ -1,303 +1,384 @@
-import numpy as np
 import random
+from typing import List, Dict
 
-class Skyjo():
-    def __init__(self, p1=None, p2=None):
-        self.cards = []
-        #(4, 5, 6, 7, 0, 1, 2, 3)
-        self.player1 = p1
-        self.player2 = p2
-        self.player_one = 0
-        self.player_two = 0
-        self.current_player = 0
-        self.last_out = None
-        self.player_one_total = []
-        self.player_one_visible = [None] * 12
-        self.player_one_cleared = -1
-        self.player_two_total = []
-        self.player_two_visible = [None] * 12
-        self.player_two_cleared = -1
-        self.discarded_cards = []
-
-        self.swap_from_deck = False
-        self.swap_from_discard = False
-        self.drawn_card = -3
-        self.last_swap = False
-        self.round_over = False
-        self.keep_drawn = True
-
-        self.current_action = 0
-
-    def reset(self):
-        self.__init__(self.player1, self.player2)
-
-    def initialize_bots(self, p2=None, p1=None):
-        self.player1 = p1
-        self.player2 = p2
-
-    def take_action(self, position, discard):
-        self.switch_current()
-        if discard:
-            discard(self.player_one_total[position])
-        self.swap_card(1, position, self.drawn_card)
-        self.drawn_card = -3
-        self.swap_from_deck = False
-        self.swap_from_discard = False
-        self.keep_drawn = True
-        if self.last_swap:
-            self.round_over = True
-
-    def new_round(self):
-        for i in range(5):
-            self.cards.append(-2)
-        for i in range(10):
-            self.cards.append(-1)
-            self.cards.extend(range(1, 13))
-        for i in range(15):
-            self.cards.append(0)
-        self.shuffle()
-
-        for i in range(12):
-            self.player_one_total.insert(0, self.draw_deck())
-            self.player_two_total.insert(0, self.draw_deck())
-
-        if self.last_out is None:
-            pos1 = random.randint(0, 11)
-            pos2 = random.randint(0, 11)
-            while(pos1 == pos2):
-                pos2 = random.randint(0, 11)
-            self.player_one_visible[pos1] = self.player_one_total[pos1]
-            self.player_one_visible[pos2] = self.player_one_total[pos2]
-
-            pos1 = random.randint(0, 11)
-            pos2 = random.randint(0, 11)
-            while(pos1 == pos2):
-                pos2 = random.randint(0, 11)
-            self.player_two_visible[pos1] = self.player_two_total[pos1]
-            self.player_two_visible[pos2] = self.player_two_total[pos2]
-
-            if self.get_player_score(1) >= self.get_player_score(2):
-                self.current_player = 1
-            else:
-                self.current_player = 2
+class Card():
+    """
+    @author Adam Haile
+    @param value: The value of the card, visible: If the card is visible
+    Initializes a new card with the given value, hidden by default
+    """
+    def __init__ (self, value: int, visible: bool = False):
+        self.value = value
+        if value < 0:
+            self.color = "#3334e3"
+        if value == 0:
+            self.color = "#54e4fd"
+        if value > 0 and value < 5:
+            self.color = "#7ee258"
+        if value > 4 and value < 9:
+            self.color = "#faf935"
+        if value > 8 and value < 13:
+            self.color = "#fe1f2a"
+        self.visible = visible
+        
+    def __str__(self):
+        if self.visible:
+            return str(self.value)
         else:
-            self.current_player = self.last_out
+            return str(None)
+        
+    def __eq__(self, other):
+        return self.value == str(other)
+        
+    def flip(self):
+        """
+        Flips the card
+        """
+        self.visible = not self.visible
 
+class Deck():
+    """
+    @author Adam Haile
+    @param card_req: Dictionary of card values and their counts, top_card_visible: If the top card is visible, name: Name of the deck
+    Initializes a new deck with the given card requirements, top card visibility, and name
+    """
+    def __init__(self, card_req: Dict[int, int], top_card_visible: bool = False, name: str = "Deck"):
+        self.cards = [Card(value) for value, count in card_req.items() for _ in range(count)]
+        self.top_card_visible = top_card_visible
+        self.name = name
 
-    def get_player_score(self, player):
-        total = 0
-        if player == 1:
-            for ele in self.player_one_visible:
-                if ele is not None:
-                    total += ele
-        else:
-            for ele in self.player_two_visible:
-                if ele is not None:
-                    total += ele
-        return total
-
+    def __str__(self):
+        return self.name
+    
+    def __len__(self):
+        return len(self.cards)
 
     def shuffle(self):
-        np.random.shuffle(self.cards)
+        """
+        Shuffles the deck
+        """
+        random.shuffle(self.cards)
 
-
-    def draw_deck(self):
-        if len(self.cards) == 0:
-            top_card = self.discarded_cards.pop()
-            for _ in range(len(self.discarded_cards)):
-                self.cards.append(self.discarded_cards.pop())
-            self.discarded_cards.clear()
-            self.discarded_cards.append(top_card)
-            self.shuffle()
-
+    def draw(self):
+        """
+        @return: The top card of the deck
+        """
         return self.cards.pop()
+    
+    def discard(self, card: Card):
+        """
+        @param card: The card to discard
+        Discards the given card
+        """
+        if self.top_card_visible and str(card) == "None":
+            card.flip()
+        self.cards.append(card)
 
+    def peek(self):
+        """
+        @return: The top card of the deck
+        """
+        return self.cards[-1]
 
-    def draw_discard(self):
-        return self.discarded_cards.pop(0)
+class Player():
+    """
+    @author Adam Haile
+    @param name: Name of the player, playable: If the player is controlled by a human
+    Initializes a new player with the given name and playable status
+    """
+    def __init__ (self, name: str, playable: bool = False):
+        self.name = name
+        self.playable = playable
+        # Game variables
+        self.total_score = 0
 
+        # Round variables
+        self.score = 0
+        self.hand = {}
+        self.drawn_card = None
+        self.cleared_column = False
+    
+    def __str__(self):
+        return self.name
+    
+    def get_board(self):
+        """
+        @return A string representation of the player's board
+        """
+        board = ""
+        for i, card in self.hand.items():
+            board += str(card) + " "
+            if i == 3 or i == 7:
+                board += "\n"
+        return board
+    
+    def compute_score(self):
+        """
+        @return The score of the player's board
+        """
+        self.score = 0
+        for card in self.hand.values():
+            if str(card) != "None":
+                self.score += int(str(card))
 
-    def discard(self, card):
-        self.discarded_cards.insert(0, card)
+        return self.score
 
-    def get_round_state(self):
-        if len(self.discarded_cards) == 0:
-            top_discard = None
-        else:
-            top_discard = self.discarded_cards[0]
-        player_one_score = self.get_player_score(1)
-        player_two_score = self.get_player_score(2)
-        round_state = (self.player_one_visible, player_one_score, self.player_one, self.player_one_cleared,
-                    self.player_two_visible, player_two_score, self.player_two, self.player_two_cleared, top_discard, self.drawn_card)
-        return round_state
+    def get_card(self, index: int):
+        """
+        @return The card at the given index
+        """
+        return self.hand[index]
+    
+    def replace_card(self, index: int, card: Card):
+        """
+        @param index: The index of the card, card: The card to set
+        Sets the card at the given index
+        """
+        old_card = self.hand[index]
+        self.hand[index] = card
+        return old_card
 
+    def flip_card(self, index: int):
+        """
+        @param index: The index of the card to flip
+        Flips the card at the given index
+        """
+        if index in self.hand.keys():
+            self.hand[index].flip()
 
-    def is_round_over(self):
-        if self.player_one_total == self.player_one_visible:
-            return 1
-        if self.player_two_total == self.player_two_visible:
-            return 2
-        return 0
+    def discard_drawn(self, deck: Deck):
+        """
+        @param deck: The deck to discard the drawn card to
+        Discards the drawn card
+        """
+        deck.discard(self.drawn_card)
+        self.drawn_card = None
 
-
-    def is_game_over(self):
-        return (self.player_one >= 100) or (self.player_two >= 100)
-
-
-    def swap_card(self, player, i, value):
-        if player == 1:
-            self.player_one_total[i] = value
-            self.player_one_visible[i] = value
-        if player == 2:
-            self.player_two_total[i] = value
-            self.player_two_visible[i] = value
-
-
-    def switch_current(self):
-        if self.current_player == 1:
-            self.check_player_columns(2)
-            self.check_player_columns(1)
-            self.current_player = 2
-        elif self.current_player == 2:
-            self.check_player_columns(1)
-            self.check_player_columns(2)
-            self.current_player = 1
-
-
-    def tally_round_score(self, running):
-        if self.is_round_over() != 0:
-            last_out = self.is_round_over()
-            player_one_score = 0
-            for card in self.player_one_total:
-                player_one_score += card if card is not None else 0
-            player_two_score = 0
-            for card in self.player_two_total:
-                player_two_score += card if card is not None else 0
-
-            if last_out == 1 and player_one_score >= player_two_score:
-                player_one_score *= 2
-            if last_out == 2 and player_two_score >= player_one_score:
-                player_two_score *= 2
-
-            self.player_one += player_one_score
-            self.player_two += player_two_score
-            self.cards.clear()
-            self.discarded_cards.clear()
-            self.player_one_total.clear()
-            self.player_one_visible.clear()
-            self.player_one_visible = [None] * 12
-            self.player_one_cleared = -1
-            self.player_two_total.clear()
-            self.player_two_visible.clear()
-            self.player_two_visible = [None] * 12
-            self.player_two_cleared = -1
-
-            if running:
-                self.swap_from_deck = False
-                self.swap_from_discard = False
-                self.drawn_card = -3
-                self.last_swap = False
-                self.round_over = False
-
-            if self.player_one >= 100 and self.player_one > self.player_two:
-                return(2)
-            elif self.player_two >= 100 and self.player_two > self.player_one:
-                return(1)
-            elif self.player_one >= 100 and self.player_one == self.player_two:
-                return(3)
-            else:
-                self.new_round()
-                return(0)
-
-
-    def card_choice(self, choice):
-        if (choice == 0):
-            self.swap_from_deck = True
-            self.drawn_card = self.draw_deck()
-        elif (choice == 1):
-            if len(self.discarded_cards) < 0:
-                self.swap_from_discard = True
-                self.drawn_card = self.draw_discard()
-            else:
-                self.card_choice(0)
-
-    def dump_drawn(self, choice):
-        if (choice == 0):
-            self.keep_drawn = False
-            self.discard(self.drawn_card)
-        else:
-            self.keep_drawn = True
-
-    def player_one_placement_choice(self, choice):
-        if self.keep_drawn:
-            discarded = self.player_one_total[choice]
-            self.discard(discarded)
-            self.swap_card(1, choice, self.drawn_card)
-        else:
-            discarded = None
-            self.swap_card(1, choice, self.player_one_total[choice])
-        self.switch_current()
-        self.drawn_card = -3
-        self.swap_from_deck = False
-        self.swap_from_discard = False
-        if self.last_swap:
-            self.round_over = True
-        return discarded
-
-
-    def player_two_placement_choice(self, choice):
-        if self.keep_drawn:
-            discarded = self.player_two_total[choice]
-            self.discard(discarded)
-            self.swap_card(1, choice, self.drawn_card)
-        else:
-            discarded = None
-            self.swap_card(1, choice, self.player_two_total[choice])
-        self.switch_current()
-        self.drawn_card = -3
-        self.swap_from_deck = False
-        self.swap_from_discard = False
-        if self.last_swap:
-            self.round_over = True
-        return discarded
-
-    def check_player_columns(self, player):
-        if player == 1 and self.player_one_cleared == -1:
-            i = 0
-            for _ in range(4):
-                card_one = self.player_one_visible[i]
-                card_two = self.player_one_visible[i + 4]
-                card_three = self.player_one_visible[i + 8]
-                if card_one is not None and (card_one == card_two == card_three):
-                    self.discard(card_one)
-                    self.discard(card_two)
-                    self.discard(card_three)
-                    self.player_one_cleared = i
-                    self.player_one_total[i - 8] = None
-                    self.player_one_total[i - 4] = None
-                    self.player_one_total[i] = None
-                    self.player_one_visible[i - 8] = None
-                    self.player_one_visible[i - 4] = None
-                    self.player_one_visible[i] = None
-                    return 1
-                i += 1
+    def get_unknown_count(self):
+        """
+        @return The number of unknown cards in the player's hand
+        """
+        return len([card for card in self.hand.values() if str(card) == "None" and isinstance(card, Card)])
+    
+    # Abstract methods which are required to be set up by any AI players
+    def draw_card(self, players: List['Player'], discard: Deck):
+        """
+        @param players: List of players, discard: The discard deck
+        @return: 0 for deck, 1 for discard
+        Logic for player's choice on drawing a card from the deck or discard
+        """
+        if not self.playable:
+            raise NotImplementedError("This method must be implemented by the subclass")
         
-        if player == 2 and self.player_two_cleared == -1:
-            i = 0
-            for _ in range(4):
-                card_one = self.player_two_visible[i]
-                card_two = self.player_two_visible[i + 4]
-                card_three = self.player_two_visible[i + 8]
-                if card_one is not None and (card_one == card_two == card_three):
-                    self.discard(card_one)
-                    self.discard(card_two)
-                    self.discard(card_three)
-                    self.player_two_cleared = i
-                    self.player_two_total[i - 8] = None
-                    self.player_two_visible[i - 8] = None
-                    self.player_two_total[i - 4] = None
-                    self.player_two_visible[i - 4] = None
-                    self.player_two_total[i] = None
-                    self.player_two_visible[i] = None
-                    return 1
-                i += 1
+        # for player in players:
+        #     print(player.name + "'s board: ")
+        #     print(player.get_board() + "\n")
+        
+        # print("Top Discard: " + str(discard.peek()) + "\n")
+
+        answer = None
+        while answer is None:
+            response = input("Draw from deck (0) or discard (1)?: ")
+            try:
+                if int(response) >= 0 and int(response) <= 1:
+                    answer = int(response)
+            except:
+                pass
+
+        return answer
+    
+    def keep_discard_card(self, players: List['Player']):
+        """
+        @param players: List of players
+        @return: 0 for discard, 1 for keep
+        Logic for player's choice on keeping or discarding the drawn card
+        """
+        if not self.playable:
+            raise NotImplementedError("This method must be implemented by the subclass")
+        
+        # print(self.get_board())
+        # print("Holding: " + str(self.drawn_card))
+        answer = None
+        while answer is None:
+            response = input("Keep the card? (0: Discard, 1: Keep): ")
+            try:
+                if int(response) >= 0 and int(response) <= 1:
+                    answer = int(response)
+            except:
+                pass
+
+        return answer
+    
+    def board_choice(self, players: List['Player']):
+        """
+        @param players: List of players
+        @return: (0-11) The index of the card to replace or flip
+        Logic for player's choice on replacing or flipping a card
+        """
+        if not self.playable:
+            raise NotImplementedError("This method must be implemented by the subclass")
+        
+        # print(self.get_board())
+        answer = None
+        while answer is None:
+            if self.drawn_card is not None:
+                response = input("Replace a card (0-11): ")
+            else:
+                response = input("Flip a card (0-11): ")
+
+            try:
+                # Check if response is a valid option
+                if int(response) >= 0 and int(response) <= 11:
+                    # Check if user has a card and allow them to replace anything on board with if so
+                    if self.drawn_card is not None:
+                        answer = int(response)
+                    else:
+                        # Check if spot user is attempting to flip is not already flipped
+                        if str(self.hand[int(response)]) == "None":
+                            answer = int(response)
+            except:
+                pass
+
+        return answer
+
+class Skyjo():
+    """
+    @author Adam Haile
+    @param players: List of players
+    Initializes a new game of Skyjo with the given players
+    """
+    def __init__(self, players: List[Player]):
+        self.players = players
+        self.turn: Player = None
+        self.deck: Deck = Deck({-2: 5, -1: 10, 0: 15, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10, 10: 10, 11: 10, 12: 10})
+        self.deck.shuffle()
+        self.discard = Deck({}, top_card_visible=True, name="Discard")
+        self.last_winner = None
+        for player in self.players:
+            # Inititalize the player's hand with 12 cards
+            player.hand = {i: self.deck.draw() for i in range(12)}
+                
+            # Flip 2 random cards for start of game
+            random_indices = random.sample(range(12), 2)
+            for index in random_indices:
+                player.flip_card(index)
+            
+            # Compute the score based on flipped cards
+            player.compute_score()
+
+            # Set the first player to play based on the lowest score
+            if self.turn == None:
+                self.turn = player
+            elif player.score < self.turn.score:
+                self.turn = player
+
+    def _turn(self):
+        """
+        Call current player for their actions and performs them
+        Clears columns and updates scores
+        """
+        # print(self.turn.name + "'s turn")
+        # Draw a card from the deck or discard (first action for player)
+        first_action = 0 if len(self.discard) == 0 else self.turn.draw_card(self.players, self.discard)
+
+        if first_action == 0:
+            self.turn.drawn_card = self.deck.draw()
+            if len(self.deck) == 0:
+                self.deck.cards = self.discard.cards
+                self.deck.shuffle()
+                self.discard.cards = []
+        else:
+            self.turn.drawn_card = self.discard.draw()
+
+        if not str(self.turn.drawn_card).isdigit():
+            self.turn.drawn_card.flip()
+
+        # Keep the drawn card or discard it (second action for player)
+        second_action = self.turn.keep_discard_card(self.players)
+        if second_action == 0:
+            self.turn.discard_drawn(self.discard)
+
+        # Flip or replace a card (third action for player)
+        third_action = self.turn.board_choice(self.players)
+        if self.turn.drawn_card != None:
+            old_card = self.turn.replace_card(third_action, self.turn.drawn_card)
+            self.turn.drawn_card = None
+            self.discard.discard(old_card)
+
+        else:
+            self.turn.flip_card(third_action)
+
+        # Check if a column should be cleared and compute the score based on flipped cards
+        self.check_for_column()
+        self.turn.compute_score()
+
+    def _round(self):
+        """
+        Play a round of Skyjo calling _turn until any player has no unknown cards
+        """
+        while all([player.get_unknown_count() > 0 for player in self.players]):
+            self._turn()
+            index = self.players.index(self.turn)
+            self.turn = self.players[(index + 1) % len(self.players)]
+        
+        self.last_winner = min(self.players, key=lambda player: player.score)
+        self.reset_round()
+
+    def play(self):
+        """
+        Play a game of Skyjo calling _round until a player has a total score of 100 or greater
+        """
+        while all([player.total_score < 100 for player in self.players]):
+            self._round()
+            
+        return min(self.players, key=lambda player: player.total_score)
+    
+    def reset_round(self):
+        """
+        Reset the round by updating score and initializing new hands and decks.
+        """
+        if self.last_winner.score > min([player.score for player in self.players if player != self.last_winner]):
+            self.last_winner.score *= 2
+            
+        for player in self.players:
+            player.drawn_card = None
+            player.hand = {}
+            player.total_score += player.score
+            player.score = 0
+            player.cleared_column = False
+
+        self.turn = self.last_winner
+        self.deck = Deck({-2: 5, -1: 10, 0: 15, 1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 10, 8: 10, 9: 10, 10: 10, 11: 10, 12: 10})
+        self.deck.shuffle()
+        self.discard = Deck({}, top_card_visible=True, name="Discard")
+        for player in self.players:
+            player.hand = {i: self.deck.draw() for i in range(12)}
+
+    def check_for_column(self):
+        """
+        Check if a player has met the requirements to clear a column and clears it if so
+        """
+        for player in self.players:
+            if not player.cleared_column and (str(player.hand[0]) == str(player.hand[4]) == str(player.hand[8])) and str(player.hand[0]) != "None":
+                player.cleared_column = True
+                player.hand[0] = None
+                player.hand[4] = None
+                player.hand[8] = None
+
+            if not player.cleared_column and (str(player.hand[1]) == str(player.hand[5]) == str(player.hand[9])) and str(player.hand[1]) != "None":
+                player.cleared_column = True
+                player.hand[1] = None
+                player.hand[5] = None
+                player.hand[9] = None
+
+            if not player.cleared_column and (str(player.hand[2]) == str(player.hand[6]) == str(player.hand[10])) and str(player.hand[2]) != "None":
+                player.cleared_column = True
+                player.hand[2] = None
+                player.hand[6] = None
+                player.hand[10] = None
+
+            if not player.cleared_column and (str(player.hand[3]) == str(player.hand[7]) == str(player.hand[11])) and str(player.hand[3]) != "None":
+                player.cleared_column = True
+                player.hand[3] = None
+                player.hand[7] = None
+                player.hand[11] = None
